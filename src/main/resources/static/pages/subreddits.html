@@ -1,0 +1,89 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Subreddit Stats</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+
+<div class="row">
+
+
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+
+                <div class="hide-show-element-anim-2">
+                    <dl class="dl-horizontal text-info" >
+                        <dt>Total Subreddits:</dt>
+                        <dd>{{ajaxData.subredditCount}}</dd>
+
+                        <dt>Quarantined:</dt>
+                        <dd>{{ajaxData.quaranteedCount}}</dd>
+                    </dl>
+
+                    <p >
+                        <button type="button" class="btn btn-outline btn-primary" ng-click="showNewPopSubTable(); clickedButton=2;" ng-class="{'active':clickedButton == 2}"><i class="fa fa-pie-chart"></i> New Popular Subreddits</button>
+                        <button type="button" class="btn btn-outline btn-primary" ng-click="showTopSubTable(); clickedButton=1;" ng-class="{'active':clickedButton == 1}"><i class="fa fa-pie-chart"></i> Top 100 Subreddits</button>
+
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+
+        <div class="hide-show-element-anim-2" ng-if="showGraphs">
+            <highchart id="chart4" config="SubredditTypeGraph"></highchart>
+        </div>
+
+
+    </div>
+
+    <div class="col-md-6">
+
+        <div class="panel panel-default hide-show-element-anim-2" ng-if="showNewPopTable">
+            <div class="panel-heading">
+                New Popular Subreddits
+
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+
+                <label class="checkbox-inline">
+                    <input type="checkbox" ng-model="onlyNSFW" ng-change="changeSubTableNSFW(onlyNSFW);">Show Only <strong>18+</strong> Subreddits
+                </label>
+
+
+                <table ng-table="NewPopTableParams" class="table table-bordered table-striped table-condensed">
+                    <tr ng-repeat="row in $data track by row.id">
+                        <td data-title="'Name'" ><a ng-href="http://reddit.com/r/{{row.displayName}}" target="_blank">{{row.displayName}}</a></td>
+                        <td data-title="'Subscribers'" sortable="'subscribers'">{{row.subscribers}}</td>
+                        <td data-title="'Date Created'" sortable="'createdUtc'">{{fromUnixTime(row.createdUtc)}}</td>
+                        <td data-title="'Type'" sortable="'subredditType'">{{row.subredditType}}</td>
+                    </tr>
+                </table>
+
+
+            </div>
+
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+
+    </div>
+    <!-- /.col-lg-6 -->
+</div>
+
+
+

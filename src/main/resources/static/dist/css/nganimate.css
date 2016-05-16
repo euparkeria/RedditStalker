@@ -1,0 +1,97 @@
+
+
+
+
+
+
+.messages-anim {
+    -webkit-transition:all linear 0.3s;
+    transition:all linear 0.3s;
+}
+
+.messages-anim.ng-active {
+    opacity:1;
+}
+.messages-anim.ng-inactive {
+    opacity:0;
+}
+
+
+
+.hide-show-element-anim-2 { }
+
+.hide-show-element-anim-2.ng-leave {
+    opacity:0;
+}
+
+
+.hide-show-element-anim-2.ng-enter {
+    display:block;
+    -webkit-animation:0.5s show;
+    animation:0.5s show;
+}
+
+
+
+@keyframes hide {
+    0% {
+        opacity:1;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity:0;
+        transform: scale(0.5);
+    }
+}
+
+@-webkit-keyframes hide {
+    0% {
+        opacity:1;
+        transform: scale(1);
+    }
+    100% {
+        opacity:0;
+        transform: scale(0.5);
+    }
+}
+
+
+
+
+@keyframes show {
+    0% {
+        opacity:0;
+        transform: scale(0.5);
+    }
+    70% {
+        transform: scale(1.02);
+    }
+    100% {
+        opacity:1;
+        transform: scale(1);
+    }
+}
+
+@-webkit-keyframes show {
+    0% {
+        opacity:0;
+        transform: scale(0.5);
+    }
+    70% {
+        transform: scale(1.02);
+    }
+    100% {
+        opacity:1;
+        transform: scale(1);
+    }
+}
+
+
+
+
+
+
+
+
+

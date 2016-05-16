@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="redditStalker">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Reddit Stelker, site for exposing reactianries on Reddit">
+    <meta name="author" content="euparkeria">
+
+    <title>RedditStalker</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- angular-loading bar CSS -->
+    <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.8.0/loading-bar.min.css' type='text/css' media='all' />
+    <!-- ng-table css -->
+    <link href="/dist/css/ng-table.min.css" rel="stylesheet">
+
+
+    <!-- Custom CSS -->
+    <link href="/dist/css/simple-sidebar.css" rel="stylesheet">
+
+    <link href="/dist/css/custom.css" rel="stylesheet">
+    <link href="/dist/css/nganimate.css" rel="stylesheet">
+
+
+
+
+    <!-- AngularJS -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.2/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.2/angular-route.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.2/angular-animate.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.2/angular-messages.min.js"></script>
+    <script src='//ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.2/angular-resource.min.js'></script>
+
+    <script src='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.8.0/loading-bar.min.js'></script>
+    <script src="/dist/js/ng-table.min.js"></script>
+
+
+
+
+    <script src="//code.highcharts.com/adapters/standalone-framework.js"></script>
+    <script src="//code.highcharts.com/4.2.1/highcharts.js"></script>
+    <script src="//code.highcharts.com/4.2.1/highcharts-more.js"></script>
+    <script src="/dist/js/highcharts-ng.min.js"></script>
+
+
+
+    <!-- My scripts -->
+    <script src="/script.js"></script>
+
+
+    <base href="/">
+
+</head>
+
+<body>
+<div ng-controller="navigationMenuController">
+
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+
+                <a class="navbar-brand" href="#"><i class="fa fa-reddit"></i> RedditStalker </a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li ng-class="{ active: isActive('/search') }">
+                        <a  href="/search"><i class="fa fa-search"></i> User Search</a>
+                    </li>
+
+                    <li ng-class="{ active: isActive('/Subreddits') }">
+                        <a  href="/Subreddits"><i class="fa fa-table"></i> Subreddits</a>
+                    </li>
+                    
+                    <li ng-class="{ active: isActive('/SrsUsers') }">
+                        <a  href="/SrsUsers"><i class="fa fa-table"></i> Brigadiers List</a>
+                    </li>
+
+
+                    <li>
+                        <a href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+<!-- /.ng-controller -->
+</div>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div ng-view></div>
+
+    </div>
+    <!-- /.container -->
+
+
+
+
+</body>
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-70685707-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+</html>

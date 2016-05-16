@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">SRS Users</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+
+<div class="row">
+    <div class="col-lg-10">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Gathered by ReddBot
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+
+
+                <table ng-table="tableParams" class="table table-bordered table-striped table-condensed">
+                    <tr ng-repeat="row in $data track by row.id">
+                        <td data-title="'Username'"  sortable="'username'"><a ng-href="/search/{{row.username}}">{{row.username}}</a></td>
+                        <td data-title="'Subreddit'"  sortable="'subreddit'">{{row.subreddit}}</td>
+                        <td data-title="'Last Updated'"  sortable="'last_check_date'">{{fromUnixTime(row.last_check_date)}}</td>
+                        <td data-title="'SRS Karma Balance'"  sortable="'srs_karma_balance'">{{row.srs_karma_balance}}</td>
+                        <td data-title="'Invasion count'" sortable="'invasion_number'">{{row.invasion_number}}</td>
+                    </tr>
+                </table>
+
+
+
+            </div>
+
+
+
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-6 -->
+    </div>
+
+
+

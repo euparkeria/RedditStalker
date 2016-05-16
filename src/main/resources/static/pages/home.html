@@ -1,0 +1,174 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Stalk a Redditor</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+
+
+<div class="row">
+    <div class="col-md-6">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Search by username
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+
+            <form novalidate role="form" ng-submit="searchUser();" name="redditorSearchForm">
+                <div class="form-group input-group">
+                    <input type="text" class="form-control" placeholder="Reddit Username" ng-model="redditorState.userName" ng-class="{'search-field-background':redditorState.searchInProgress == true, 'search-field-background-found':redditorState.showInfoAndButtons}" name="userName" required>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit" id="stalk" ng-disabled="redditorSearchForm.userName.$error.required">
+                            <i class="fa fa-search"></i></button>
+                    </span>
+                </div>
+            </form>
+                <div ng-messages='ajaxRequest' class="messages-anim" role="alert">
+                    <div class="alert alert-danger text-center" ng-message='serverError'><i class="fa fa-exclamation-triangle"></i> Redditor could not be found D:</div>
+                </div>
+
+
+                <div class="hide-show-element-anim-2" ng-if="redditorState.showInfoAndButtons">
+                        <dl class="dl-horizontal text-info" >
+                            <dt>Username:</dt>
+                            <dd>{{ajaxData.userData.name}}</dd>
+
+                            <dt>Last Active:</dt>
+                            <dd>{{ redditorState.lastActive | rounded:0}} days ago</dd>
+
+                            <dt>Has Gold:</dt>
+                            <dd>{{ajaxData.userData.isGold}}</dd>
+
+                            <dt>Is Moderator:</dt>
+                            <dd>{{ajaxData.userData.isMod}}</dd>
+
+                            <dt>Has verified Email:</dt>
+                            <dd>{{ajaxData.userData.hasVerifiedEmail}}</dd>
+
+                            <dt>Date Created:</dt>
+                            <dd>{{fromUnixTime(ajaxData.userData.createdUtc)}}</dd>
+
+                            <dt>Link Karma:</dt>
+                            <dd>{{ajaxData.userData.linkKarma}} ({{ ajaxData.userData.linkKarma/secondsToDays(ajaxData.userData.createdUtc) | rounded:2 }} /day)</dd>
+
+                            <dt>Comment Karma:</dt>
+                            <dd>{{ajaxData.userData.commentKarma}}  ({{ ajaxData.userData.commentKarma/secondsToDays(ajaxData.userData.createdUtc) | rounded:2 }} /day)</dd>
+
+                            <dt>Submittions:</dt>
+                            <dd>{{ajaxData.submittionsData.length}}  ({{ ajaxData.submittionsData.length/secondsToDays(ajaxData.userData.createdUtc) | rounded:2 }} /day)</dd>
+
+                            <dt>Comments:</dt>
+                            <dd>{{ajaxData.commentsData.length}}  ({{ ajaxData.commentsData.length/secondsToDays(ajaxData.userData.createdUtc) | rounded:2 }} /day)</dd>
+                        </dl>
+
+
+                    <p ng-if="redditorState.knownBrigadier" class="text-center"><mark><i class="fa fa-exclamation-triangle"></i>This user is a known brigadier!</mark></p>
+
+                    <p>
+                        <button type="button" class="btn btn-outline btn-primary" ng-click="showGraphs(); redditorState.clickedButton=3;" ng-class="{'active':redditorState.clickedButton == 3}"><i class="fa fa-pie-chart"></i> Graphs</button>
+                        <button type="button" class="btn btn-outline btn-primary" ng-click="changeTableSource(ajaxData.submittedInSubreddits); redditorState.clickedButton=1;" ng-class="{'active':redditorState.clickedButton == 1}"><i class="fa fa-pencil"></i> Submissions</button>
+                        <button type="button" class="btn btn-outline btn-primary" ng-click="changeTableSource(ajaxData.commentedInSubreddits); redditorState.clickedButton=2;" ng-class="{'active':redditorState.clickedButton == 2}"><i class="fa fa-comments"></i> Comments</button>
+                        <button type="button" class="btn btn-outline btn-primary" ng-click="" ng-class="{'active':redditorState.clickedButton == 4}"><i class="fa fa-puzzle-piece"></i> Guesswork</button>
+
+                    </p>
+            </div>
+                </div>
+                <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+
+
+           <!-- callouts for Submitions -->
+
+                <div class="bs-callout bs-callout-primary hide-show-element-anim-2" ng-repeat="item in ajaxData.submittionsData" ng-if="item.subreddit == redditorState.selectedSubreddit && redditorState.showSubmittedLinks">
+                    <h4>
+                        {{ item.title }}
+                    </h4>
+                    <ul class="list-inline">
+                        <li class="text-info">Karma: <strong>{{item.score}}</strong></li>
+                        <li class="text-info">Comments: <strong>{{item.numComments}}</strong></li>
+                        <li class="text-info">Date: <strong>{{fromUnixTime(item.createdUtc)}}</strong></li>
+                        <li><a class="btn btn-success btn-circle" ng-href="{{redditDomain + item.permalink}}" target="_blank"><i class="fa fa-link"></i></a></li>
+                    </ul>
+                </div>
+
+
+
+            <!-- callouts for Comments -->
+
+                <div class="bs-callout bs-callout-primary hide-show-element-anim-2" ng-repeat="item in ajaxData.commentsData" ng-if="item.subreddit == redditorState.selectedSubreddit && redditorState.showSubmittedComments">
+                    <h4>
+                        {{ item.linkTitle }}
+                        <blockquote>
+                           <p class="text-muted">{{ item.body }}</p>
+                        </blockquote>
+                    </h4>
+
+                    <ul class="list-inline">
+                        <li class="text-info">Karma: <strong>{{item.score}}</strong></li>
+                        <li class="text-info">Controversiality: <strong>{{item.controversiality}}</strong></li>
+                        <li class="text-info">Gilded: <strong>{{item.gilded}}</strong></li>
+                        <li class="text-info">Date: <strong>{{fromUnixTime(item.createdUtc)}}</strong></li>
+
+                        <li><a class="btn btn-success btn-circle" ng-href="{{ getCommentLink(item) }}" target="_blank"><i class="fa fa-link"></i></a></li>
+                    </ul>
+
+                </div>
+
+
+        <div class="hide-show-element-anim-2" ng-if="redditorState.showGraphs">
+            <highchart id="chart3" config="redditorGraphs.PoliticalChart"></highchart>
+        </div>
+
+
+                <!-- /.col-lg-4 -->
+    </div>
+    <!-- /.col-lg-6 -->
+
+    <div class="col-md-6">
+
+        <div class="panel panel-yellow hide-show-element-anim-2"  ng-if="redditorState.showContribSortedTable">
+            <div class="panel-heading">
+                Contributes to following Subreddits:
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <table class="table table-striped table-bordered table-hover" >
+                    <thead>
+                    <tr>
+                        <th>Subreddit</th>
+                        <th>Count:</th>
+                        <th>Total Karma</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in redditorState.sortedTableSelector | orderBy:'-count'" ng-click="showSubmittions(item, $index)" ng-class="{'active':$index == redditorState.tableIndex}">
+                        <td>{{item.subreddit}}</td>
+                        <td>{{item.count}}</td>
+                        <td>{{item.KarmaBalance}}</td>
+                    </tr>
+                    </tbody>
+
+                </table>
+
+
+            </div>
+        </div>
+
+
+    <div class="hide-show-element-anim-2" ng-if="redditorState.showGraphs">
+                <highchart id="chart1" config="redditorGraphs.HourschartConfig"></highchart>
+                <highchart id="chart2" config="redditorGraphs.LinksVsCommentsChartConfig"></highchart>
+
+    </div>
+
+
+    </div>
+
+            <!-- /.col-lg-4 -->
+    </div>
+
+
